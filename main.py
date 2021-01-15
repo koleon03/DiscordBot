@@ -20,7 +20,7 @@ async def whois(ctx, person: discord.User):
     userping = str(person.mention)
     senderavatar = str(sender.avatar_url)
     sendername = str(sender.display_name)
-    embedx = discord.Embed(title=username, description=userping, color=0xbf3c2e)
+    embedx = discord.Embed(title=username, description=userping, color=0x02e0ca)
     embedx.set_author(name="Requested by " + sendername, icon_url=senderavatar)
     embedx.set_image(url=useravatar)
     await ctx.send(embed=embedx)
