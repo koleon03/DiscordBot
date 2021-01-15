@@ -25,5 +25,13 @@ async def whois(ctx, person: discord.User):
     embedx.set_image(url=useravatar)
     await ctx.send(embed=embedx)
 
+@bot.command()
+async def choke(ctx, person: discord.User):
+    username = str(person.display_name)
+    url = "https://tenor.com/9JNv.gif"
+    emb = discord.Embed(title="Choking " + username, color=0x42cf29)
+    emb.set_image(url=url)
+    await ctx.send(embed=emb)
+
 
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
