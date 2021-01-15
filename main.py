@@ -40,6 +40,7 @@ async def help(ctx):
 @bot.command()
 async def embed(ctx, channel: discord.TextChannel, title, description):
     emb = discord.Embed(title=title, description=description, color=0xa531b0)
-    channel.send(embed=emb)
+    await channel.send(embed=emb)
+    await ctx.send(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0d00))
 
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
