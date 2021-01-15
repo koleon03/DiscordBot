@@ -43,8 +43,9 @@ async def embed(ctx, channel: discord.TextChannel, title, description):
     senderavatar = str(sender.avatar_url)
     sendername = str(sender.display_name)
     emb = discord.Embed(title=title, description=description, color=0xa531b0)
-    emb.set_footer(text=sendername, icon_url=senderavatar)
+    emb.set_footer(text="Sent by " + sendername, icon_url=senderavatar)
+    message = await ctx.send(embed=discord.Embed(title="Sending...", color=0xff0d00))
     await channel.send(embed=emb)
-    await ctx.send(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0d00))
+    await message.edit(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0d00))
 
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
