@@ -39,7 +39,11 @@ async def help(ctx):
 
 @bot.command()
 async def embed(ctx, channel: discord.TextChannel, title, description):
+    sender = ctx.author
+    senderavatar = str(sender.avatar_url)
+    sendername = str(sender.display_name)
     emb = discord.Embed(title=title, description=description, color=0xa531b0)
+    emb.set_footer(text=sendername, icon_url=senderavatar)
     await channel.send(embed=emb)
     await ctx.send(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0d00))
 
