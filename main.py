@@ -33,5 +33,8 @@ async def choke(ctx, person: discord.User):
     emb.set_image(url=url)
     await ctx.send(embed=emb)
 
+@bot.command()
+async def help(ctx):
+    await ctx.send(embed=discord.Embed(title="No.", color=0x0e4780))
 
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
