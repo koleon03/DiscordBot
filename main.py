@@ -28,7 +28,7 @@ async def whois(ctx, person: discord.User):
 @bot.command()
 async def choke(ctx, person: discord.User):
     username = str(person.display_name)
-    url = "https://tenor.com/9JNv.gif"
+    url = "https://tenor.com/view/the-simpsons-favorite-angry-choke-bart-simpsons-gif-14674987"
     emb = discord.Embed(title="Choking " + username, color=0x42cf29)
     emb.set_image(url=url)
     await ctx.send(embed=emb)
