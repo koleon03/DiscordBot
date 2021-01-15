@@ -37,4 +37,9 @@ async def choke(ctx, person: discord.User):
 async def help(ctx):
     await ctx.send(embed=discord.Embed(title="No.", color=0x0e4780))
 
+@bot.command()
+async def embed(ctx, channel: discord.TextChannel, title, description):
+    emb = discord.Embed(title=title, description=description, color=0xa531b0)
+    channel.send(embed=emb)
+
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
