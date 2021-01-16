@@ -2,6 +2,7 @@ import discord
 import asyncio
 import random
 from discord.ext import commands
+import time
 
 bot = commands.Bot(command_prefix='$')
 bot.remove_command("help")
@@ -43,7 +44,7 @@ async def embed(ctx):
     sender = ctx.author
     senderavatar = str(sender.avatar_url)
     sendername = str(sender.display_name)
-    msgs.append(await ctx.send(embed=discord.Embed(title="Where do you want to send the embed?", color=0xff0000)))
+    msg0 = await ctx.send(embed=discord.Embed(title="Where do you want to send the embed?", color=0xff0000))
 
     def check(msg):
         return msg.channel == ctx.channel and msg.author == sender
@@ -54,25 +55,31 @@ async def embed(ctx):
     if channel is None:
         await ctx.send(embed=discord.Embed(title="Error!", color=0xff0000, description="You need to mention a channel!"))
         return
-    msgs.append(await ctx.send(embed=discord.Embed(title="What title do you want?", color=0xff0000, description="Type cancel to cancel.")))
+    await msg1.delete()
+    await msg0.edit(embed=discord.Embed(title="What title do you want?", color=0xff0000, description="Type cancel to cancel."))
     msg2 = await bot.wait_for("message", check=check)
     msgs.append(msg2)
     title = msg2.content
+
     if(title == "cancel"):
         await ctx.send(embed=discord.Embed(title="Canceled!", color=0xff0000))
         return
-    msgs.append(await ctx.send(embed=discord.Embed(title="What description do you want?", color=0xff0000, description="Type cancel to cancel.")))
+
+    await msg2.delete()
+    await msg0.edit(embed=discord.Embed(title="What description do you want?", color=0xff0000, description="Type cancel to cancel."))
     msg3 = await bot.wait_for("message", check=check)
     msgs.append(msg3)
     description = msg3.content
     if (description == "cancel"):
         await ctx.send(embed=discord.Embed(title="Canceled!", color=0xff0000))
         return
+    await msg3.delete()
     emb = discord.Embed(title=title, description=description, color=0xff0000)
     emb.set_footer(text="Sent by " + sendername, icon_url=senderavatar)
-    msg4 = await ctx.send(embed=discord.Embed(title="Sending...", color=0xff0000))
+    await msg0.edit(embed=discord.Embed(title="Sending...", color=0xff0000))
     await channel.send(embed=emb)
-    await msg4.edit(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0000))
+    await msg0.edit(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0000))
+
 
 
 @bot.command()
