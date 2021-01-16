@@ -54,14 +54,20 @@ async def embed(ctx):
     if channel is None:
         await ctx.send(embed=discord.Embed(title="Error!", color=0xff0000, description="You need to mention a channel!"))
         return
-    msgs.append(await ctx.send(embed=discord.Embed(title="What title do you want?", color=0xff0000)))
+    msgs.append(await ctx.send(embed=discord.Embed(title="What title do you want?", color=0xff0000, description="Type cancel to cancel.")))
     msg2 = await bot.wait_for("message", check=check)
     msgs.append(msg2)
     title = msg2.content
-    msgs.append(await ctx.send(embed=discord.Embed(title="What description do you want?", color=0xff0000)))
+    if(title == "cancel"):
+        await ctx.send(embed=discord.Embed(title="Canceled!", color=0xff0000))
+        return
+    msgs.append(await ctx.send(embed=discord.Embed(title="What description do you want?", color=0xff0000, description="Type cancel to cancel.")))
     msg3 = await bot.wait_for("message", check=check)
     msgs.append(msg3)
     description = msg3.content
+    if (description == "cancel"):
+        await ctx.send(embed=discord.Embed(title="Canceled!", color=0xff0000))
+        return
     emb = discord.Embed(title=title, description=description, color=0xff0000)
     emb.set_footer(text="Sent by " + sendername, icon_url=senderavatar)
     msg4 = await ctx.send(embed=discord.Embed(title="Sending...", color=0xff0000))
