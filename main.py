@@ -6,6 +6,7 @@ import time
 
 bot = commands.Bot(command_prefix='$')
 bot.remove_command("help")
+muterole = None
 
 @bot.command()
 async def degr(ctx):
@@ -36,7 +37,7 @@ async def choke(ctx, person: discord.User):
 
 @bot.command()
 async def help(ctx):
-    await ctx.send(embed=discord.Embed(title="No.", color=0x0e4780))
+    await ctx.send(embed=discord.Embed(title="Use $embed to start the generator", color=0x0e4780))
 
 @bot.command()
 async def embed(ctx):
