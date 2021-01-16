@@ -38,14 +38,45 @@ async def help(ctx):
     await ctx.send(embed=discord.Embed(title="No.", color=0x0e4780))
 
 @bot.command()
-async def embed(ctx, channel: discord.TextChannel, title, description):
+async def embed(ctx):
+    msgs = []
     sender = ctx.author
     senderavatar = str(sender.avatar_url)
     sendername = str(sender.display_name)
-    emb = discord.Embed(title=title, description=description, color=0xa531b0)
+    msgs.append(await ctx.send(embed=discord.Embed(title="Where do you want to send the embed?", color=0xff0000)))
+
+    def check(msg):
+        return msg.channel == ctx.channel and msg.author == sender
+
+    msg1 = await bot.wait_for("message", check=check)
+    msgs.append(msg1)
+    channel = discord.utils.get(ctx.guild.channels, mention=msg1.content, type=discord.ChannelType.text)
+    if channel is None:
+        await ctx.send(embed=discord.Embed(title="Error!", color=0xff0000, description="You need to mention a channel!"))
+        return
+    msgs.append(await ctx.send(embed=discord.Embed(title="What title do you want?", color=0xff0000)))
+    msg2 = await bot.wait_for("message", check=check)
+    msgs.append(msg2)
+    title = msg2.content
+    msgs.append(await ctx.send(embed=discord.Embed(title="What description do you want?", color=0xff0000)))
+    msg3 = await bot.wait_for("message", check=check)
+    msgs.append(msg3)
+    description = msg3.content
+    emb = discord.Embed(title=title, description=description, color=0xff0000)
     emb.set_footer(text="Sent by " + sendername, icon_url=senderavatar)
-    message = await ctx.send(embed=discord.Embed(title="Sending...", color=0xff0d00))
+    msg4 = await ctx.send(embed=discord.Embed(title="Sending...", color=0xff0000))
     await channel.send(embed=emb)
-    await message.edit(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0d00))
+    await msg4.edit(embed=discord.Embed(title="Successful!", description="Embed sent in " + str(channel.mention), color=0xff0000))
+
+
+@bot.command()
+async def clear(ctx, arg):
+    try:
+        limit = int(arg)
+    except ValueError:
+        await ctx.send(embed=discord.Embed(title="Error!", color=0xff0000, description="You need to specify a number!"))
+        return
+    messages = await ctx.channel.history(limit=limit + 1).flatten()
+
 
 bot.run('Nzk5Njc4MDY0NTg5MTQ0MTQ0.YAHEOw.sMZKBiTl-AesLgimX7ajwXWJdOk')
